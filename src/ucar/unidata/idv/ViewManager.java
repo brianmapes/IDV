@@ -792,6 +792,9 @@ public class ViewManager extends SharableImpl implements ActionListener,
     /** flag for sharing */
     private boolean wasSharing;
 
+    /** flag for animation update */
+    protected long lastTimePolled = 0;
+
     /**
      * We keep the window bounds around for persisting/unpersisting
      * this ViewManager.
@@ -4866,11 +4869,13 @@ public class ViewManager extends SharableImpl implements ActionListener,
                                 }
                             } else if (evt.getPropertyName().equals(
                                     Animation.ANI_SET)) {
+                               // System.out.println(Arrays.toString(animationWidget.getTimesArray()));
                                 if (animationTimeline != null) {
                                     animationTimeline.setDatedThings(
                                         DatedObject.wrap(
                                             Util.makeDates(
                                                 animationWidget.getTimes())));
+                                  //  System.out.println("TTTT\n");
                                 }
 
                                 if ((aniInfo != null) && aniInfo
@@ -4879,7 +4884,11 @@ public class ViewManager extends SharableImpl implements ActionListener,
                                         .getAnimationSetInfo()
                                         .getIsTimeDriver() && !timesArray
                                         .equals(animationWidget.getTimesArray())) {
-                                    animationDriverChanged();
+                                    long tt = (int)(aniInfo.getAnimationSetInfo().getPollMinutes()*60* 1000);
+                                    if((System.currentTimeMillis() - lastTimePolled) >= tt) {
+                                        animationDriverChanged();
+                                        lastTimePolled = System.currentTimeMillis();
+                                    }
                                     timesArray = animationWidget.getTimesArray();
 
                                 }

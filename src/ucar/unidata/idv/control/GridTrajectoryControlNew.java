@@ -853,6 +853,7 @@ public class GridTrajectoryControlNew extends DrawingControl {
                                 };
                                 if(select.getLabel() == "Line") {
                                     isLine = true;
+                                    arrowCbx.setSelected(arrowHead);
                                 } else {
                                     arrowCbx.setSelected(false);
                                     isLine = false;
@@ -1576,7 +1577,8 @@ public class GridTrajectoryControlNew extends DrawingControl {
                     getGridDisplay().setArrowHeadSize(arrowHeadSizeValue);
                     if(trajForm.intValue() == 0){
                         getGridDisplay().setTracerType(7);
-                        tracerFormBox.setSelectedIndex(1);
+                        if(tracerFormBox != null)
+                            tracerFormBox.setSelectedIndex(0);
                     }
                     getGridDisplay().resetTrojectories();
                     //setLineWidth(super.getLineWidth());
@@ -2803,7 +2805,7 @@ public class GridTrajectoryControlNew extends DrawingControl {
 
         }
         //
-        if ( !hiddenBtn.isSelected() && (glyphs.size() > 0) &&
+        if ( (!hiddenBtn.isSelected() || isBundle) && (glyphs.size() > 0) &&
                 isXY) {
             SampledSet domain2D =
                     makeDomain2D((GriddedSet) domainSet);
@@ -3238,7 +3240,7 @@ public class GridTrajectoryControlNew extends DrawingControl {
                //     setStreamlines();
             }
         };
-        enableInitPlaneWidget();
+        //enableInitPlaneWidget();
         XYBtn.addActionListener(listener1);
         YZBtn.addActionListener(listener1);
         XZBtn.addActionListener(listener1);
