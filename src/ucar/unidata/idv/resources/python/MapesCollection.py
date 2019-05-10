@@ -1,6 +1,7 @@
 from visad.python.JPythonMethods import *
 # A collection of Utilities for Mapes IDV Collection
 #Author: Suvarchal Kumar Cheedela, suvarchal.kumar@rsmas.miami.edu
+
 ############################TIME UTILS############################################
 def getSamplesAtTimes(grid,year=None,season=None,mon=None,day=None,hour=None,min=None,sec=None,ms=None):
   """ Samples a grid at specified time periods, multiple arguments can be used in complex sampling
@@ -23,6 +24,7 @@ def getSamplesAtTimes(grid,year=None,season=None,mon=None,day=None,hour=None,min
   for i in range(len(subsetTimeValues)):
      subsetgrid.setSample(i,grid[indices[i]])
   return subsetgrid
+
 def getSampleTimeIndices(grid,year=None,season=None,mon=None,day=None,hour=None,min=None,sec=None,ms=None):
   """ A Helper function to get indices a grid at specified time periods, multiple arguments can be used in
       complex sampling. This function returns list of indices in grid.
@@ -73,6 +75,7 @@ def getSampleTimeIndices(grid,year=None,season=None,mon=None,day=None,hour=None,
      alltimes=getSampleTimesInFormat(grid,searchformat.strip())
      matchindices=[i for i,t in enumerate(alltimes) if t==searchstring]
   return matchindices
+
 def getSampleTimesInFormat(grid,timeformat,timezone="UTC",outformat="string"):
   """ A Helper function to return times of a grid in specified format as a list.
   """
@@ -94,6 +97,7 @@ def getSampleTimesInFormat(grid,timeformat,timezone="UTC",outformat="string"):
     else:
       raise VisADException("Unrecognized output format")
   return temp
+
 def createTimeMeans(grid,meanType="None"):
   """ Create time mean of a grid at periods specified by type.
       meanType can be yearly, monthly, daily, hourly, minutes, seconds
@@ -173,6 +177,7 @@ def createTimeMeans(grid,meanType="None"):
         newdatalist.setSample(newind,tempdata.divide(Real(count)))
   newParamName="Time Mean "+str(Util.cleanTypeName(GridUtil.getParamType(grid)))
   return newName(newdatalist,newParamName)
+
 def ddt(grid,timegradunit):
   """ compute tendency (time derivative) using forward difference,
       units of returned grid are units of grid per timegradient unit
